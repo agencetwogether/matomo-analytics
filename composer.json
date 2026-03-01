@@ -1,32 +1,31 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "agencetwogether/matomo-analytics",
+    "description": "Matomo Analytics integration for Filament Panels with a set of widgets to display your analytics data in a beautiful way.",
     "keywords": [
-        ":vendor_name",
+        "agencetwogether",
         "laravel",
         "filamentphp",
         "filament",
         "filament-plugin",
-        ":package_slug"
+        "matomo-analytics"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/agencetwogether/matomo-analytics",
     "support": {
-        "issues": "https://github.com/:vendor_slug/:package_slug/issues",
-        "source": "https://github.com/:vendor_slug/:package_slug"
+        "issues": "https://github.com/agencetwogether/matomo-analytics/issues",
+        "source": "https://github.com/agencetwogether/matomo-analytics"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "Agence Twogether",
+            "email": "github@agencetwogether.fr",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^8.2",
         "filament/filament": "^5.0",
-        "filament/forms": "^5.0",
-        "filament/tables": "^5.0",
+        "bernskioldmedia/laravel-matomo": "^0.2.0",
         "spatie/laravel-package-tools": "^1.15.0"
     },
     "require-dev": {
@@ -38,18 +37,16 @@
         "pestphp/pest-plugin-arch": "^3.0|^4.0",
         "pestphp/pest-plugin-laravel": "^3.0|^4.0",
         "pestphp/pest-plugin-livewire": "^3.0|^4.0",
-        "rector/rector": "^2.0",
-        "spatie/laravel-ray": "^1.26"
+        "rector/rector": "^2.0"
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src/",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories/"
+            "Agencetwogether\\MatomoAnalytics\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests/"
+            "Agencetwogether\\MatomoAnalytics\\Tests\\": "tests/"
         }
     },
     "scripts": {
@@ -64,11 +61,8 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
-            ],
-            "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
-            }
+                "Agencetwogether\\MatomoAnalytics\\MatomoAnalyticsServiceProvider"
+            ]
         }
     },
     "config": {
@@ -79,6 +73,6 @@
             "phpstan/extension-installer": true
         }
     },
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "prefer-stable": true
 }
