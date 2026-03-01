@@ -1,5 +1,5 @@
 <a href="https://github.com/agencetwogether/matomo-analytics" class="filament-hidden">
-<img style="width: 100%; max-width: 100%;" alt="filament-matomo-analytics-art" src="https://repository-images.githubusercontent.com/461983658/983ab0b3-a97f-49ab-91a0-7bfd165217e1" >
+<img style="width: 100%; max-width: 100%;" alt="matomo-analytics-art" src="https://github.com/user-attachments/assets/22cf8736-af03-4fed-a52d-19ee9e2ff05f" >
 </a>
 
 
