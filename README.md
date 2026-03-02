@@ -40,7 +40,7 @@ composer require agencetwogether/matomo-analytics
 ```
 
 > [!IMPORTANT]
-> If you have not set up a custom theme and are using Filament Panels follow the instructions in the [Filament Docs](https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme) first.
+> If you have not set up a custom theme and are using Filament Panels follow the instructions in the[Filament Docs (V4)](https://filamentphp.com/docs/4.x/styling/overview#creating-a-custom-theme), [Filament Docs (V5)](https://filamentphp.com/docs/5.x/styling/overview#creating-a-custom-theme) first.
 
 After setting up a custom theme add the following to your theme css file.
 
@@ -137,14 +137,15 @@ then register the widgets you want from the **Available Widgets** list either in
 
 namespace App\Filament\Pages;
 
+use BackedEnum;
 use Filament\Pages\Page;
 use Agencetwogether\MatomoAnalytics\Widgets;
 
 class MyCustomDashboardPage extends Page
 {
-    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.pages.my-custom-dashboard-page';
+    protected string $view = 'filament.pages.my-custom-dashboard-page';
 
     protected function getHeaderWidgets(): array
     {
