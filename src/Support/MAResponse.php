@@ -86,7 +86,7 @@ final class MAResponse
 
         $results = [];
         foreach ($analyticsData as $key => $analyticData) {
-            $results[$analyticData->label] = $analyticData->nb_visits;
+            $results[rtrim($analyticData->label, 'h') . 'h'] = $analyticData->nb_visits;
         }
 
         return $results;
