@@ -15,7 +15,7 @@ class VisitsPerHourWidget extends ChartWidget
     use CanViewWidget;
 
     protected ?string $pollingInterval = null;
-    
+
     // @phpstan-ignore-next-line
     protected string $view = 'matomo-analytics::widgets.matomo-chart';
 
