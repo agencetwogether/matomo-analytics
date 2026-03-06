@@ -8,11 +8,14 @@ use Agencetwogether\MatomoAnalytics\Traits\CanViewWidget;
 use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Support\Str;
+use Illuminate\Support\Collection;
 
 class VisitsByDeviceWidget extends ChartWidget
 {
     use CanViewWidget;
+
+    // @phpstan-ignore-next-line
+    protected string $view = 'matomo-analytics::widgets.matomo-chart';
 
     public ?string $filter = 'T';
 
@@ -20,24 +23,25 @@ class VisitsByDeviceWidget extends ChartWidget
 
     protected function getData(): array
     {
-        $data = collect(MAResponse::visitsByDevice($this->filter))
-            ->filter(fn (mixed $item, string $key): bool => Str::doesntContain($key, 'total', ignoreCase: true))
-            ->values()
-            ->toArray();
+        /** @var Collection<string, int|float> $response */
+        $response = collect(MAResponse::visitsByDevice($this->filter))->sortDesc();
+
+        $labels = $response->keys()->values()->all();
 
         return [
-            'labels' => array_keys(MAResponse::visitsByDevice($this->filter)),
+            'labels' => $labels,
             'datasets' => [
                 [
                     'label' => __('matomo-analytics::widgets.nb_uniq_visitors'),
-                    'data' => $data,
+                    'data' => $response->values()->all(),
                     'backgroundColor' => [
                         '#008FFB', '#00E396', '#feb019', '#ff455f', '#775dd0', '#80effe',
                     ],
                     'fill' => 'start',
                     'cutout' => '55%',
                     'hoverOffset' => 5,
-                    'borderColor' => 'transparent',
+                    'borderColor' => '#ffffff',
+                    'borderWidth' => 1,
                 ],
             ],
         ];
@@ -57,17 +61,10 @@ class VisitsByDeviceWidget extends ChartWidget
     {
         return RawJs::make(<<<'JS'
             {
-                animation: {
-                    duration: 0,
-                },
+                animation: { duration: 0 },
                 elements: {
-                    point: {
-                        radius: 0,
-                    },
-                    hit: {
-                        radius: 0,
-                    },
-
+                    point: { radius: 0 },
+                    hit: { radius: 0 },
                 },
                 maintainAspectRatio: false,
                 borderRadius: 4,
@@ -87,16 +84,10 @@ class VisitsByDeviceWidget extends ChartWidget
                     },
                 },
                 scales: {
-                    x: {
-                        display: false,
-                    },
-                    y: {
-                        display: false,
-                    },
+                    x: { display: false },
+                    y: { display: false },
                 },
-                tooltips: {
-                    enabled: false,
-                },
+                tooltips: { enabled: false },
             }
         JS);
     }

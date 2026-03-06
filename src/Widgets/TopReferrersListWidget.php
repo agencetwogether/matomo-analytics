@@ -66,7 +66,7 @@ class TopReferrersListWidget extends TableWidget
                 ]),
             ])
             ->extraAttributes([
-                'class' => '[&_.fi-ta-record:not(:last-child)]:border-b [&_.fi-ta-record]:border-gray-200 dark:[&_.fi-ta-record]:border-gray-700 [&_.fi-ta-record-content-ctn]:py-2.5 [&_.fi-ta-text-item]:text-gray-700 dark:[&_.fi-ta-text-item]:text-gray-300 [&_.fi-ta-text-item]:hover:text-primary-500 dark:[&_.fi-ta-text-item]:hover:text-primary-400',
+                'class' => '@container [&_.fi-ta-record:not(:last-child)]:border-b [&_.fi-ta-record]:border-gray-200 dark:[&_.fi-ta-record]:border-gray-700 [&_.fi-ta-record-content-ctn]:py-2.5 [&_.fi-ta-text-item]:text-gray-700 dark:[&_.fi-ta-text-item]:text-gray-300 [&_.fi-ta-text-item]:hover:text-primary-500 dark:[&_.fi-ta-text-item]:hover:text-primary-400',
             ])
             ->headerActions([
                 SelectAction::make('filter')

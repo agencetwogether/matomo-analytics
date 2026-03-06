@@ -59,14 +59,6 @@ final class MAResponse
             $results[str($analyticData->label)->studly()->append(' (' . number_format((int) $analyticData->sum_daily_nb_uniq_visitors) . ')')->toString()] = $analyticData->sum_daily_nb_uniq_visitors;
         }
 
-        $total = 0;
-        foreach ($results as $result) {
-            $total += $result;
-        }
-        $results = Arr::sortDesc($results);
-
-        $results[__('matomo-analytics::widgets.total') . ' (' . number_format($total) . ')'] = number_format($total);
-
         return $results;
     }
 
@@ -136,22 +128,13 @@ final class MAResponse
         $results = [];
 
         foreach ($filtered as $key => $analyticData) {
-
-            if ($analyticData->segment == 'deviceType==smartphone') {
+            if (property_exists($analyticData, 'segment') && $analyticData->segment == 'deviceType==smartphone') {
                 $label = __('matomo-analytics::widgets.smartphone');
             } else {
                 $label = $analyticData->label;
             }
             $results[str($label)->append(' (' . number_format((int) $analyticData->nb_visits) . ')')->toString()] = $analyticData->nb_visits;
         }
-
-        $total = 0;
-        foreach ($results as $result) {
-            $total += $result;
-        }
-        $results = Arr::sortDesc($results);
-
-        $results[__('matomo-analytics::widgets.total') . ' (' . number_format($total) . ')'] = number_format($total);
 
         return $results;
     }

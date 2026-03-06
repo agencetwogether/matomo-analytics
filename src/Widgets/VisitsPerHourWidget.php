@@ -8,10 +8,14 @@ use Agencetwogether\MatomoAnalytics\Traits\CanViewWidget;
 use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Collection;
 
 class VisitsPerHourWidget extends ChartWidget
 {
     use CanViewWidget;
+
+    // @phpstan-ignore-next-line
+    protected string $view = 'matomo-analytics::widgets.matomo-chart';
 
     public ?string $filter = 'T';
 
@@ -19,18 +23,17 @@ class VisitsPerHourWidget extends ChartWidget
 
     protected function getData(): array
     {
-        $data = collect(MAResponse::visitsPerHour($this->filter))
-            ->values()
-            ->toArray();
+        /** @var Collection<string, int|float> $response */
+        $response = collect(MAResponse::visitsPerHour($this->filter));
 
-        $labels = array_keys(MAResponse::visitsPerHour($this->filter));
+        $labels = $response->keys()->values()->all();
 
         return [
             'labels' => $labels,
             'datasets' => [
                 [
                     'label' => __('matomo-analytics::widgets.nb_uniq_visitors'),
-                    'data' => $data,
+                    'data' => $response->values()->all(),
                     'borderWidth' => 1,
                     'barPercentage' => 1,
                 ],
@@ -53,9 +56,7 @@ class VisitsPerHourWidget extends ChartWidget
         return RawJs::make(<<<'JS'
             {
                 plugins: {
-                    legend: {
-                        display: false
-                    }
+                    legend: { display: false }
                 }
             }
         JS);
