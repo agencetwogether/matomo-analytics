@@ -2,6 +2,14 @@
 
 All notable changes to `matomo-analytics` will be documented in this file.
 
+## 1.0.3 - 2026-03-06
+
+Optimization to reduce queries for VisitsByCountryWidget // VisitsByDeviceWidget // VisitsPerHourWidget widgets
+
+Remove pollingIntervall to chart widgets
+
+**Full Changelog**: https://github.com/agencetwogether/matomo-analytics/compare/1.0.2...1.0.3
+
 ## 1.0.2 - 2026-03-02
 
 **Full Changelog**: https://github.com/agencetwogether/matomo-analytics/compare/1.0.1...1.0.2
