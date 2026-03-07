@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Agencetwogether\MatomoAnalytics\Support;
 
+use Agencetwogether\MatomoAnalytics\Services\MatomoService;
 use Agencetwogether\MatomoAnalytics\Traits\PageViews;
 use Agencetwogether\MatomoAnalytics\Traits\Visitors;
 use Agencetwogether\MatomoAnalytics\Traits\VisitorsFrequencies;
@@ -23,31 +24,19 @@ final class MADataLookups
     use VisitsReturningDuration;
 
     /**
-     * @return array<string, Period>
-     */
-    public function mostVisitedAndTopReferrers(): array
-    {
-        return [
-            'T' => Period::days(1),
-            'TW' => Period::days(7),
-            'TM' => Period::months(1),
-            'TY' => Period::years(1),
-        ];
-    }
-
-    /**
      * @return array<string, array<string, int>>
      */
     public function pageViews(): array
     {
         return [
-            'T' => $this->pageViewsToday(),
-            'Y' => $this->pageViewsYesterday(),
-            'LW' => $this->pageViewsLastWeek(),
-            'LM' => $this->pageViewsLastMonth(),
-            'LSD' => $this->pageViewsLastSevenDays(),
-            'LTD' => $this->pageViewsLastThirtyDays(),
+            'today' => $this->pageViewsData('today'),
+            'yesterday' => $this->pageViewsData('yesterday'),
+            'last_week' => $this->pageViewsData('last_week'),
+            'last_month' => $this->pageViewsData('last_month'),
+            'last_7_days' => $this->pageViewsData('last_7_days'),
+            'last_30_days' => $this->pageViewsData('last_30_days'),
         ];
+
     }
 
     /**
@@ -56,12 +45,12 @@ final class MADataLookups
     public function visitorsFrequencies(): array
     {
         return [
-            'T' => $this->visitorsFrequenciesToday(),
-            'Y' => $this->visitorsFrequenciesYesterday(),
-            'LW' => $this->visitorsFrequenciesLastWeek(),
-            'LM' => $this->visitorsFrequenciesLastMonth(),
-            'LSD' => $this->visitorsFrequenciesLastSevenDays(),
-            'LTD' => $this->visitorsFrequenciesLastThirtyDays(),
+            'today' => $this->visitorsFrequenciesData('today'),
+            'yesterday' => $this->visitorsFrequenciesData('yesterday'),
+            'last_week' => $this->visitorsFrequenciesData('last_week'),
+            'last_month' => $this->visitorsFrequenciesData('last_month'),
+            'last_7_days' => $this->visitorsFrequenciesData('last_7_days'),
+            'last_30_days' => $this->visitorsFrequenciesData('last_30_days'),
         ];
     }
 
@@ -71,12 +60,12 @@ final class MADataLookups
     public function visits(): array
     {
         return [
-            'T' => $this->visitsToday(),
-            'Y' => $this->visitsYesterday(),
-            'LW' => $this->visitsLastWeek(),
-            'LM' => $this->visitsLastMonth(),
-            'LSD' => $this->visitsLastSevenDays(),
-            'LTD' => $this->visitsLastThirtyDays(),
+            'today' => $this->visitsData('today'),
+            'yesterday' => $this->visitsData('yesterday'),
+            'last_week' => $this->visitsData('last_week'),
+            'last_month' => $this->visitsData('last_month'),
+            'last_7_days' => $this->visitsData('last_7_days'),
+            'last_30_days' => $this->visitsData('last_30_days'),
         ];
     }
 
@@ -86,12 +75,12 @@ final class MADataLookups
     public function visitsDuration(): array
     {
         return [
-            'T' => $this->visitDurationToday(),
-            'Y' => $this->visitDurationYesterday(),
-            'LW' => $this->visitDurationLastWeek(),
-            'LM' => $this->visitDurationLastMonth(),
-            'LSD' => $this->visitDurationLastSevenDays(),
-            'LTD' => $this->visitDurationLastThirtyDays(),
+            'today' => $this->visitDurationData('today'),
+            'yesterday' => $this->visitDurationData('yesterday'),
+            'last_week' => $this->visitDurationData('last_week'),
+            'last_month' => $this->visitDurationData('last_month'),
+            'last_7_days' => $this->visitDurationData('last_7_days'),
+            'last_30_days' => $this->visitDurationData('last_30_days'),
         ];
     }
 
@@ -101,100 +90,12 @@ final class MADataLookups
     public function visitsReturningDuration(): array
     {
         return [
-            'T' => $this->visitReturningDurationToday(),
-            'Y' => $this->visitReturningDurationYesterday(),
-            'LW' => $this->visitReturningDurationLastWeek(),
-            'LM' => $this->visitReturningDurationLastMonth(),
-            'LSD' => $this->visitReturningDurationLastSevenDays(),
-            'LTD' => $this->visitReturningDurationLastThirtyDays(),
-        ];
-    }
-
-    /**
-     * @return array<string, CarbonPeriod>
-     */
-    public function visitsByDeviceAndByCountryAndCity(): array
-    {
-        return [
-            'T' => CarbonPeriod::create(Carbon::yesterday(), Carbon::today()),
-            'Y' => CarbonPeriod::create(Carbon::yesterday()->clone()->subDay(), Carbon::yesterday()),
-            'LW' => CarbonPeriod::create(
-                Carbon::today()
-                    ->clone()
-                    ->startOfWeek(Carbon::SUNDAY)
-                    ->subWeek(),
-                Carbon::today()
-                    ->clone()
-                    ->subWeek()
-                    ->endOfWeek(Carbon::SATURDAY)
-            ),
-            'LM' => CarbonPeriod::create(
-                Carbon::today()
-                    ->clone()
-                    ->startOfMonth()
-                    ->subMonth(),
-                Carbon::today()
-                    ->clone()
-                    ->startOfMonth()
-                    ->subMonth()
-                    ->endOfMonth()
-            ),
-            'LSD' => CarbonPeriod::create(
-                Carbon::yesterday()
-                    ->clone()
-                    ->subDays(6),
-                Carbon::yesterday()
-            ),
-            'LTD' => CarbonPeriod::create(
-                Carbon::yesterday()
-                    ->clone()
-                    ->subDays(29),
-                Carbon::yesterday()
-            ),
-        ];
-    }
-
-    /**
-     * @return array<string, CarbonPeriod>
-     */
-    public function visitsPerHour(): array
-    {
-        return [
-            'T' => CarbonPeriod::create(Carbon::today()->clone(), Carbon::today()->endOfDay()),
-            'Y' => CarbonPeriod::create(Carbon::yesterday()->clone(), Carbon::yesterday()->endOfDay()),
-            'LW' => CarbonPeriod::create(
-                Carbon::today()
-                    ->clone()
-                    ->startOfWeek(Carbon::SUNDAY)
-                    ->subWeek(),
-                Carbon::today()
-                    ->clone()
-                    ->subWeek()
-                    ->endOfWeek(Carbon::SATURDAY)
-            ),
-            'LM' => CarbonPeriod::create(
-                Carbon::today()
-                    ->clone()
-                    ->startOfMonth()
-                    ->subMonth(),
-                Carbon::today()
-                    ->clone()
-                    ->startOfMonth()
-                    ->subMonth()
-                    ->endOfMonth()
-            ),
-            'LSD' => CarbonPeriod::create(
-                Carbon::yesterday()
-                    ->clone()
-                    ->subDays(6),
-                Carbon::yesterday()
-            ),
-            'LTD' => CarbonPeriod::create(
-                Carbon::yesterday()
-                    ->clone()
-                    ->subDays(29),
-                Carbon::yesterday()
-            ),
+            'today' => $this->visitReturningDurationData('today'),
+            'yesterday' => $this->visitReturningDurationData('yesterday'),
+            'last_week' => $this->visitReturningDurationData('last_week'),
+            'last_month' => $this->visitReturningDurationData('last_month'),
+            'last_7_days' => $this->visitReturningDurationData('last_7_days'),
+            'last_30_days' => $this->visitReturningDurationData('last_30_days'),
         ];
     }
 
@@ -204,12 +105,12 @@ final class MADataLookups
     public function visitors(): array
     {
         return [
-            'T' => $this->visitorsToday(),
-            'Y' => $this->visitorsYesterday(),
-            'LW' => $this->visitorsLastWeek(),
-            'LM' => $this->visitorsLastMonth(),
-            'LSD' => $this->visitorsLastSevenDays(),
-            'LTD' => $this->visitorsLastThirtyDays(),
+            'today' => $this->visitorsData('today'),
+            'yesterday' => $this->visitorsData('yesterday'),
+            'last_week' => $this->visitorsData('last_week'),
+            'last_month' => $this->visitorsData('last_month'),
+            'last_7_days' => $this->visitorsData('last_7_days'),
+            'last_30_days' => $this->visitorsData('last_30_days'),
         ];
     }
 }

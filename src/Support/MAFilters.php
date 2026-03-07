@@ -19,12 +19,12 @@ final class MAFilters
     public static function common(): array
     {
         return [
-            'T' => __('matomo-analytics::widgets.T'),
-            'Y' => __('matomo-analytics::widgets.Y'),
-            'LW' => __('matomo-analytics::widgets.LW'),
-            'LM' => __('matomo-analytics::widgets.LM'),
-            'LSD' => __('matomo-analytics::widgets.LSD'),
-            'LTD' => __('matomo-analytics::widgets.LTD'),
+            'today' => __('matomo-analytics::widgets.T'),
+            'yesterday' => __('matomo-analytics::widgets.Y'),
+            'last_week' => __('matomo-analytics::widgets.LW'),
+            'last_month' => __('matomo-analytics::widgets.LM'),
+            'last_7_days' => __('matomo-analytics::widgets.LSD'),
+            'last_30_days' => __('matomo-analytics::widgets.LTD'),
         ];
     }
 
@@ -34,10 +34,10 @@ final class MAFilters
     public static function mostVisitedAndTopReferrers(): array
     {
         return [
-            'T' => __('matomo-analytics::widgets.T'),
-            'TW' => __('matomo-analytics::widgets.TW'),
-            'TM' => __('matomo-analytics::widgets.TM'),
-            'TY' => __('matomo-analytics::widgets.TY'),
+            'today' => __('matomo-analytics::widgets.T'),
+            'this_week' => __('matomo-analytics::widgets.TW'),
+            'this_month' => __('matomo-analytics::widgets.TM'),
+            'this_year' => __('matomo-analytics::widgets.TY'),
         ];
     }
 }

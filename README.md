@@ -22,14 +22,26 @@
     </a>
 <p>
 
-# Matomo Analytics
+# Matomo Analytics for Filament
 
-Matomo Analytics integration for Filament Panels with a set of widgets to display your analytics data in a beautiful way.
+Matomo Analytics for Filament integration for Filament Panels with a set of widgets to display your analytics data in a beautiful way.
+
+## Features
+
+- Matomo statistics in Filament dashboard
+- Page views
+- Unique visitors
+- Visit duration
+- Country statistics
+- City statistics
+- Period filters...
 
 > [!NOTE]  
-> This package is an adaptation of [bezhanSalleh/filament-google-analytics](https://github.com/bezhanSalleh/filament-google-analytics), updated to work with Matomo Analytics.
-Thanks to him
+> Matomo is a trademark of the [Matomo project](https://matomo.org/). This plugin is not affiliated with or endorsed by Matomo.
 
+> [!NOTE]  
+> This package is an adaptation of [bezhanSalleh/filament-google-analytics](https://github.com/bezhanSalleh/filament-google-analytics), updated to work with Matomo Analytics for Filament.
+Thanks to him
 
 ## Installation
 
@@ -191,7 +203,6 @@ Please review [our security policy](.github/SECURITY.md) on how to report securi
 ## Credits
 
 - [Bezhan Salleh](https://github.com/bezhanSalleh)
-- [Bernskiold](https://github.com/bernskiold)
 - [Agence Twogether](https://github.com/agencetwogether)
 - [All Contributors](../../contributors)
 
