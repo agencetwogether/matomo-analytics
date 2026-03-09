@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace Agencetwogether\MatomoAnalytics\Support;
 
-use Agencetwogether\MatomoAnalytics\Services\MatomoService;
 use Agencetwogether\MatomoAnalytics\Traits\PageViews;
 use Agencetwogether\MatomoAnalytics\Traits\Visitors;
 use Agencetwogether\MatomoAnalytics\Traits\VisitorsFrequencies;
 use Agencetwogether\MatomoAnalytics\Traits\Visits;
 use Agencetwogether\MatomoAnalytics\Traits\VisitsDuration;
 use Agencetwogether\MatomoAnalytics\Traits\VisitsReturningDuration;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
 
 final class MADataLookups
 {

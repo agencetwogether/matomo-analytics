@@ -1,0 +1,21 @@
+<?php
+
+namespace {{ namespace }};
+
+use Agencetwogether\MatomoAnalytics\Contracts\HasMatomoWidgets;
+use Agencetwogether\MatomoAnalytics\Pages\MatomoBaseAnalyticsDashboard;
+use Agencetwogether\MatomoAnalytics\Widgets;
+
+class {{ class }} extends MatomoBaseAnalyticsDashboard implements HasMatomoWidgets
+{
+    protected static ?string $title = 'My Custom Dashboard';
+    
+    public function getMatomoWidgets(): array
+    {
+        return [
+            Widgets\PageViewsWidget::class,
+            Widgets\VisitorsWidget::class,
+            //Add other widgets
+        ];
+    }
+}

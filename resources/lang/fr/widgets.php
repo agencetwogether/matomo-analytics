@@ -28,18 +28,15 @@ return [
     /**
      * Filter Labels
      */
-    'T' => 'Aujourd’hui',
-    'Y' => 'Hier',
-    'TW' => 'Cette semaine',
-    'LW' => 'La semaine dernière',
-    'LM' => 'Le mois dernier',
-    'TM' => 'Ce mois-ci',
-    'TY' => 'Cette année',
-    'LSD' => 'Les 7 derniers jours',
-    'LTD' => 'Les 30 derniers jours',
-    'FD' => '5 jours',
-    'TD' => '10 jours',
-    'FFD' => '15 jours',
+    'today' => 'Aujourd’hui',
+    'yesterday' => 'Hier',
+    'this_week' => 'Cette semaine',
+    'last_week' => 'La semaine dernière',
+    'last_month' => 'Le mois dernier',
+    'this_month' => 'Ce mois-ci',
+    'this_year' => 'Cette année',
+    'last_7_days' => 'Les 7 derniers jours',
+    'last_30_days' => 'Les 30 derniers jours',
 
     /**
      * Trajectory Label Descriptions
@@ -54,9 +51,16 @@ return [
     'total' => 'Total',
     'smartphone' => 'Smartphone',
     'nb_uniq_visitors' => 'Nombre de Visiteurs',
+    'others' => 'Autres',
 
     /**
      * Extra
      */
     'unknown' => 'Inconnu',
+    'no_data' => 'Aucune donnée',
+    'api_unreachable' => [
+        'heading' => 'Serveur Matomo inaccessible',
+        'description' => 'Dernière synchronisation réussie : :date. Les widgets peuvent afficher des données obsolètes ou nulles.',
+        'next_call' => 'Veuillez réessayer :date pour actualiser les données.',
+    ],
 ];

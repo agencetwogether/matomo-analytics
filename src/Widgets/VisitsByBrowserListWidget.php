@@ -7,6 +7,7 @@ use Agencetwogether\MatomoAnalytics\Support\MAFilters;
 use Agencetwogether\MatomoAnalytics\Support\SelectAction;
 use Agencetwogether\MatomoAnalytics\Traits\CanViewWidget;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\TextColumn;
@@ -87,6 +88,8 @@ class VisitsByBrowserListWidget extends TableWidget
                 SelectAction::make('filter')
                     ->options(fn (): array => MAFilters::mostVisitedAndTopReferrers()),
             ])
+            ->emptyStateHeading(__('matomo-analytics::widgets.no_data'))
+            ->emptyStateIcon(Heroicon::CircleStack)
             ->deferLoading();
     }
 }

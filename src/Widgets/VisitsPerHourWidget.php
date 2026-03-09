@@ -16,7 +16,6 @@ class VisitsPerHourWidget extends ChartWidget
 
     protected ?string $pollingInterval = null;
 
-    // @phpstan-ignore-next-line
     protected string $view = 'matomo-analytics::widgets.matomo-chart';
 
     public ?string $filter = 'today';

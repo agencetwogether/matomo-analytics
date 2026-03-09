@@ -3,123 +3,195 @@
 return [
 
     /**
-     * This is the Matomo API key that allows you to work
-     * with the API.
+     * Matomo API authentication token used to access the Matomo Reporting API
      */
     'api_key' => env('MATOMO_API_KEY'),
 
     /**
-     * This is the URL of the Matomo installation that you want
-     * to use the package with.
+     * Base URL of your Matomo instance (e.g. https://matomo.example.com)
      */
     'base_url' => env('MATOMO_BASE_URL'),
 
     /**
-     * This is the ID of your website that you want
-     *  to use the package with
+     * The Matomo site ID to retrieve analytics data for
      */
-    'id_site' => (int) env('MATOMO_ID_SITE'),
+    'id_site' => env('MATOMO_ID_SITE'),
 
     /**
-     * Dashboard Page
+     * Dedicated plugin dashboard activation
      */
     'dedicated_dashboard' => true,
     'dashboard_icon' => 'heroicon-m-chart-bar',
 
     /**
-     * Widgets
+     * Maximum number of items displayed in pie or doughnut charts
+     * Remaining items are grouped into an "Others" category to keep charts readable
      */
-    'page_views' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+    'max_items_in_pie' => 6,
 
-    'visitors' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+    /**
+     * Widget visibility configuration
+     * Configure which widgets are enabled and where they should appear
+     *
+     * - filament_dashboard : display the widget on the default Filament dashboard
+     * - plugin_dashboard   : display the widget on the Matomo plugin dashboard
+     * - custom_pages       : allow the widget to be used on custom Filament pages
+     */
+    'widgets' => [
 
-    'visitors_frequencies' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\PageViewsWidget::class
+         */
+        'page_views' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'visitors_frequencies_duration' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\VisitorsWidget::class
+         */
+        'visitors' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'visits' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\VisitorsFrequenciesWidget::class
+         */
+        'visitors_frequencies' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'visits_duration' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\VisitorsFrequenciesDurationWidget::class
+         */
+        'visitors_frequencies_duration' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'visits_by_country' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\VisitsWidget::class
+         */
+        'visits' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'visits_by_city' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\VisitsDurationWidget::class
+         */
+        'visits_duration' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'visits_per_hour' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\VisitsByCountryWidget::class
+         */
+        'visits_by_country' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'visits_by_device' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\VisitsByCityWidget::class
+         */
+        'visits_by_city' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'visits_by_browser_list' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\VisitsPerHourWidget::class
+         */
+        'visits_per_hour' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'most_visited_pages' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\VisitsByDeviceWidget::class
+         */
+        'visits_by_device' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'top_referrers_list' => [
-        'filament_dashboard' => false,
-        'global' => false,
-    ],
+        /**
+         * Widgets\VisitsByBrowserListWidget::class
+         */
+        'visits_by_browser_list' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
 
-    'visits_by_model_list' => [
-        'filament_dashboard' => false,
-        'global' => false,
+        /**
+         * Widgets\MostVisitedPagesWidget::class
+         */
+        'most_visited_pages' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
+
+        /**
+         * Widgets\TopReferrersListWidget::class
+         */
+        'top_referrers_list' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
+
+        /**
+         * Widgets\VisitsByModelListWidget::class
+         */
+        'visits_by_model_list' => [
+            'filament_dashboard' => false,
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
+        ],
     ],
 
     /**
-     * Trajectory Icons
+     * Icons used to indicate metric trends compared to the previous period
      */
     'trending_up_icon' => 'heroicon-o-arrow-trending-up',
     'trending_down_icon' => 'heroicon-o-arrow-trending-down',
     'trending_steady_icon' => 'heroicon-o-arrows-right-left',
 
     /**
-     * Trajectory Colors
+     * Colors used to indicate metric trends
      */
     'trending_up_color' => 'success',
     'trending_down_color' => 'danger',
     'trending_steady_color' => 'gray',
 
     /**
-     * Cache TTL
+     * Matomo API response caching configuration
      */
     'cache' => [
+        /**
+         * Enable or disable caching of Matomo API responses
+         */
         'enabled' => true,
-
-        // Cache TTL per filter (in minutes)
+        /**
+         * Cache TTL per filter (in minutes)
+         * This allows different cache durations depending on the selected date range
+         */
         'ttl' => [
             'today' => 5,
             'yesterday' => 60,
@@ -131,6 +203,9 @@ return [
             'this_month' => 60,
             'this_year' => 60,
         ],
+        /**
+         * Default cache TTL (in minutes) used when no specific filter TTL is defined
+         */
         'default_ttl' => 10,
     ],
 ];

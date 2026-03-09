@@ -28,18 +28,15 @@ return [
     /**
      * Filter Labels
      */
-    'T' => 'Today',
-    'Y' => 'Yesterday',
-    'TW' => 'This Week',
-    'LW' => 'Last Week',
-    'LM' => 'Last Month',
-    'TM' => 'This Month',
-    'TY' => 'This Year',
-    'LSD' => 'Last 7 Days',
-    'LTD' => 'Last 30 Days',
-    'FD' => '5 Days',
-    'TD' => '10 Days',
-    'FFD' => '15 Days',
+    'today' => 'Today',
+    'yesterday' => 'Yesterday',
+    'this_week' => 'This Week',
+    'last_week' => 'Last Week',
+    'last_month' => 'Last Month',
+    'this_month' => 'This Month',
+    'this_year' => 'This Year',
+    'last_7_days' => 'Last 7 Days',
+    'last_30_days' => 'Last 30 Days',
 
     /**
      * Trajectory Label Descriptions
@@ -54,9 +51,16 @@ return [
     'total' => 'Total',
     'smartphone' => 'Smartphone',
     'nb_uniq_visitors' => 'Number of Visitors',
+    'others' => 'Others',
 
     /**
      * Extra
      */
     'unknown' => 'Unknown',
+    'no_data' => 'No data',
+    'api_unreachable' => [
+        'heading' => 'Matomo host unreachable',
+        'description' => 'Last successful sync: :date. Widgets may display outdated or empty data',
+        'next_call' => 'Wait :date to retry refresh data.',
+    ],
 ];

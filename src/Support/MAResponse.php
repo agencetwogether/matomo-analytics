@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Agencetwogether\MatomoAnalytics\Support;
 
 use Agencetwogether\MatomoAnalytics\MatomoAnalytics;
-use BernskioldMedia\LaravelMatomo\Facades\Matomo;
-use Facades\Agencetwogether\MatomoAnalytics\Support\MADataLookups;
 use Illuminate\Support\Arr;
 
 final class MAResponse

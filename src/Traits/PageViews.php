@@ -2,7 +2,6 @@
 
 namespace Agencetwogether\MatomoAnalytics\Traits;
 
-use Agencetwogether\MatomoAnalytics\Services\MatomoService;
 use Agencetwogether\MatomoAnalytics\Services\MatomoWidgetDataService;
 use Illuminate\Support\Collection;
 

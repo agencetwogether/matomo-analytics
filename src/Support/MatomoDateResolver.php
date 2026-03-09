@@ -9,7 +9,7 @@ class MatomoDateResolver
 {
     use MetricDiff;
 
-    public static function resolve(string $filter, bool $hasPeriod): array
+    public static function resolve(string $filter, bool $hasPreviousPeriod): array
     {
         $lastWeek = self::getLastWeek();
         $lastMonth = self::getLastMonth();
@@ -20,32 +20,32 @@ class MatomoDateResolver
 
             'today' => [
                 'period' => 'day',
-                'date' => $hasPeriod ? Carbon::yesterday()->format('Y-m-d') . ',' . Carbon::today()->format('Y-m-d') : 'today',
+                'date' => $hasPreviousPeriod ? Carbon::yesterday()->clone()->format('Y-m-d') . ',' . Carbon::today()->clone()->format('Y-m-d') : 'today',
             ],
 
             'yesterday' => [
                 'period' => 'day',
-                'date' => $hasPeriod ? Carbon::yesterday()->clone()->subDay()->format('Y-m-d') . ',' . Carbon::yesterday()->format('Y-m-d') : 'yesterday',
+                'date' => $hasPreviousPeriod ? Carbon::yesterday()->clone()->subDay()->format('Y-m-d') . ',' . Carbon::yesterday()->clone()->format('Y-m-d') : 'yesterday',
             ],
 
             'last_7_days' => [
                 'period' => 'day',
-                'date' => $hasPeriod ? "{$lastSevenDays['previous']->start->format('Y-m-d')},{$lastSevenDays['current']->end->format('Y-m-d')}" : 'last7',
+                'date' => $hasPreviousPeriod ? "{$lastSevenDays['previous']->start->format('Y-m-d')},{$lastSevenDays['current']->end->format('Y-m-d')}" : 'last7',
             ],
 
             'last_30_days' => [
                 'period' => 'day',
-                'date' => $hasPeriod ? "{$lastThirtyDays['previous']->start->format('Y-m-d')},{$lastThirtyDays['current']->end->format('Y-m-d')}" : 'last30',
+                'date' => $hasPreviousPeriod ? "{$lastThirtyDays['previous']->start->format('Y-m-d')},{$lastThirtyDays['current']->end->format('Y-m-d')}" : 'last30',
             ],
 
             'last_week' => [
                 'period' => 'week',
-                'date' => $hasPeriod ? "{$lastWeek['previous']->end->format('Y-m-d')},{$lastWeek['current']->end->format('Y-m-d')}" : 'lastWeek',
+                'date' => $hasPreviousPeriod ? "{$lastWeek['previous']->end->format('Y-m-d')},{$lastWeek['current']->end->format('Y-m-d')}" : 'lastWeek',
             ],
 
             'last_month' => [
                 'period' => 'month',
-                'date' => $hasPeriod ? "{$lastMonth['previous']->end->format('Y-m-d')},{$lastMonth['current']->end->format('Y-m-d')}" : 'lastMonth',
+                'date' => $hasPreviousPeriod ? "{$lastMonth['previous']->end->format('Y-m-d')},{$lastMonth['current']->end->format('Y-m-d')}" : 'lastMonth',
             ],
 
             'this_week' => [

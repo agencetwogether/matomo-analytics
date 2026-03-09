@@ -2,7 +2,6 @@
 <img style="width: 100%; max-width: 100%;" alt="matomo-analytics-art" src="https://github.com/user-attachments/assets/22cf8736-af03-4fed-a52d-19ee9e2ff05f" >
 </a>
 
-
 <p align="center" class="flex items-center justify-center">
     <a href="https://filamentphp.com/docs/4.x/introduction/installation">
         <img alt="FILAMENT 4.x" src="https://img.shields.io/badge/FILAMENT-4.x-EBB304?style=for-the-badge">
@@ -16,9 +15,14 @@
     <a href="https://github.com/agencetwogether/matomo-analytics/actions?query=workflow%3A"Check+%26+fix+styling"+branch%3Amain" class="filament-hidden">
         <img alt="Code Style Passing" src="https://img.shields.io/github/actions/workflow/status/agencetwogether/matomo-analytics/laravel-pint.yml?style=for-the-badge&logo=github&label=code%20style">
     </a>
-
-<a href="https://packagist.org/packages/agencetwogether/matomo-analytics">
-    <img alt="Downloads" src="https://img.shields.io/packagist/dt/agencetwogether/matomo-analytics.svg?style=for-the-badge" >
+    <a href="https://packagist.org/packages/agencetwogether/matomo-analytics">
+        <img alt="Downloads" src="https://img.shields.io/packagist/dt/agencetwogether/matomo-analytics.svg?style=for-the-badge" >
+    </a>
+    <a href="https://matomo.org">
+        <img alt="Matomo website" src="https://img.shields.io/badge/Matomo-Analytics-blue?style=for-the-badge&logo=matomo" >
+    </a>
+    <a href="https://packagist.org/packages/agencetwogether/matomo-analytics">
+        <img alt="License website" src="https://img.shields.io/packagist/dt/agencetwogether/matomo-analytics.svg?style=for-the-badge" >
     </a>
 <p>
 
@@ -101,92 +105,177 @@ public function panel(Panel $panel): Panel
 {
     return $panel
         ->plugins([
-            ...
+            //...
             MatomoAnalyticsPlugin::make()
         ]);
 }
 ```
-## Usage
 
-All the widgets are enabled by default for you to use them in your filament pages/resources. In order to enable the widgets for the default filament dashboard, you need to set the `filament_dashboard` option to `true` in the config file `matomo-analytics.php` for each widget you want to enable.
-
-Publish the config files and set your settings:
-```bash
- php artisan vendor:publish --tag=matomo-analytics-config
-```
-
-#### Available Widgets
+## Available Widgets
 
 ```php
 use Agencetwogether\MatomoAnalytics\Widgets;
 
-Widgets\PageViewsWidget::class,
-Widgets\VisitorsWidget::class,
-Widgets\VisitsWidget::class,
-Widgets\VisitsDurationWidget::class,
-Widgets\VisitorsFrequenciesWidget::class,
-Widgets\VisitorsFrequenciesDurationWidget::class,
-Widgets\VisitsByCountryWidget::class,
-Widgets\VisitsByCityWidget::class,
-Widgets\VisitsPerHourWidget::class,
-Widgets\VisitsByBrowserListWidget::class,
-Widgets\VisitsByDeviceWidget::class,
-Widgets\VisitsByModelListWidget::class,
-Widgets\MostVisitedPagesWidget::class,
-Widgets\TopReferrersListWidget::class,
+Widgets\PageViewsWidget::class, // Displays the total number of page views
+Widgets\VisitorsWidget::class, // Displays the number of unique visitors
+Widgets\VisitsWidget::class, // Displays the total number of visits
+Widgets\VisitsDurationWidget::class, // Shows the average duration of visits
+Widgets\VisitorsFrequenciesWidget::class, // Shows visitor frequency (returning visitors)
+Widgets\VisitorsFrequenciesDurationWidget::class, // Shows visit duration based on visitor frequency
+Widgets\VisitsByCountryWidget::class, // Displays visits grouped by country
+Widgets\VisitsByCityWidget::class, // Displays visits grouped by city
+Widgets\VisitsPerHourWidget::class, // Shows visits distribution by hour of the day
+Widgets\VisitsByBrowserListWidget::class, // Lists visits by browser
+Widgets\VisitsByDeviceWidget::class, // Displays visits by device type (desktop, mobile, tablet)
+Widgets\VisitsByModelListWidget::class, // Lists visits by device model
+Widgets\MostVisitedPagesWidget::class, // Displays the most visited pages
+Widgets\TopReferrersListWidget::class, // Lists the top traffic referrers
 ```
 
-#### Custom Dashboard
-Though this plugin comes with a default dashboard, but sometimes you might want to change `navigationLabel` or `navigationGroup` or disable some `widgets` or any other options and given that the dashboard is a simple filament `page`; The easiest solution would be to disable the default dashboard and create a new `page`:
+## Usage
+
+You can display the widgets in several ways: 
+1. [In the default Filament Dashboard](#default_dashboard)
+2. [In the Dashboard provided by the plugin](#plugin_dashboard) 
+3. [In a custom Dashboard](#custom_dashboard) 
+4. [In any page or resource](#any_page)
+
+To manage these displays, publish the configuration file:
+```bash
+ php artisan vendor:publish --tag=matomo-analytics-config
+```
+Then modify the settings depending on your use case.
+
+**<a id="default_dashboard"></a>1. Default Filament Dashboard**
+
+For the desired widget, set the value ```filament_dashboard``` to ```true```  
+*Example:*
+```php
+'widgets' => [
+    'page_views' => [
+        'filament_dashboard' => true,
+        // ..
+    ],
+],
+```
+
+**<a id="plugin_dashboard"></a>2. Dashboard provided by the plugin**
+
+Ensure ```dedicated_dashboard``` is set to ```true``` in config file to show dashboard provided by the plugin.  
+For the desired widget, set the value ```plugin_dashboard``` to ```true```  
+*Example:*
+```php
+'widgets' => [
+    'visits_by_browser_list' => [
+        // ..
+        'plugin_dashboard' => true,
+        // ..
+    ],
+
+    'most_visited_pages' => [
+        // ..
+        'plugin_dashboard' => true,
+        // ..
+    ],
+],
+```
+
+**<a id="custom_dashboard"></a>3. Custom Dashboard**
+
+Though this plugin comes with a default dashboard, but sometimes you might want to change `navigationLabel` or `navigationGroup` or personalize some `widgets` or any other options.  
+The easiest solution would be to disable the default dashboard and create a new page.
+
+First, create a page using the command:
 
 ```bash
-php artisan filament:page MyCustomDashboardPage
+php artisan make:matomo-page MyCustomDashboardPage
 ```
-then register the widgets you want from the **Available Widgets** list either in the `getHeaderWidgets()` or `getFooterWidgets()`:
 
+This page extends the base page ```MatomoBaseAnalyticsDashboard``` and implement the ```HasMatomoWidgets``` interface.
 ```php
 <?php
 
 namespace App\Filament\Pages;
 
-use BackedEnum;
-use Filament\Pages\Page;
+use Agencetwogether\MatomoAnalytics\Contracts\HasMatomoWidgets;
+use Agencetwogether\MatomoAnalytics\Pages\MatomoBaseAnalyticsDashboard;
 use Agencetwogether\MatomoAnalytics\Widgets;
 
-class MyCustomDashboardPage extends Page
+class MyCustomDashboardPage extends MatomoBaseAnalyticsDashboard implements HasMatomoWidgets
 {
-    protected static string | BackedEnum | null $navigationIcon = 'heroicon-o-document-text';
-
-    protected string $view = 'filament.pages.my-custom-dashboard-page';
-
-    protected function getHeaderWidgets(): array
+    protected static ?string $title = 'My Custom Dashboard';
+    
+    public function getMatomoWidgets(): array
     {
         return [
             Widgets\PageViewsWidget::class,
             Widgets\VisitorsWidget::class,
-            Widgets\VisitsWidget::class,
-            Widgets\VisitsDurationWidget::class,
-            Widgets\VisitorsFrequenciesWidget::class,
-            Widgets\VisitorsFrequenciesDurationWidget::class,
-            //Widgets\VisitsByCountryWidget::class,
-            //Widgets\VisitsByCityWidget::class,
-            Widgets\VisitsPerHourWidget::class,
-            Widgets\VisitsByBrowserListWidget::class,
-            Widgets\VisitsByDeviceWidget::class,
-            Widgets\VisitsByModelListWidget::class,
-            Widgets\MostVisitedPagesWidget::class,
-            Widgets\TopReferrersListWidget::class,
+            //Add other widgets
         ];
     }
 }
 ```
+
+You must register the widgets you want to show in the ```getMatomoWidgets()``` method and set their ```custom_pages``` values to ```true``` in the configuration file.  
+*Example:*
+```php
+'widgets' => [
+    'page_views' => [
+        // ..
+        'custom_pages' => true,
+    ],
+    'visitors' => [
+        // ..
+        'custom_pages' => true,
+    ],
+],
+```
+
+**<a id="any_page"></a>4. Other Page or Resource page**
+
+You have to register the desired widgets in the page’s ```getHeaderWidgets()``` or ```getFooterWidgets()``` method.
+
+```php
+use Agencetwogether\MatomoAnalytics\Widgets;
+
+protected function getHeaderWidgets(): array
+{
+    return [
+        Widgets\VisitsByCountryWidget::class,
+        Widgets\VisitsByCityWidget::class,
+    ];
+}
+```
+
+And in the configuration file, set the ```custom_pages``` value to ```true``` for the selected widgets.  
+*Example:*
+```php
+'widgets' => [
+    'visits_by_country' => [
+        // ..
+        'custom_pages' => true,
+    ],
+    'visits_by_city' => [
+        // ..
+        'custom_pages' => true,
+    ],
+],
+```
+
+#### Manage cache
+By default, responses from requests to the Matomo server are cached to avoid sending too many requests and to optimize widget rendering.  
+You can enable or disable caching widgets and set custom time to cache per filter (in minutes).
+See config file to manage this feature.
+
 > [!NOTE]  
-> In order to enable the widgets for the default filament dashboard, you need to set the `filament_dashboard` option to `true` in the config file `matomo-analytics.php` for each widget you want to enable.
+> If the Matomo server request fails or is unavailable, a widget will appear indicating that the data may be outdated or empty.
+However, the cache still allows the data from the last successful synchronization to be displayed (only in default Filament Dashboard, Dashboard provided by the plugin and Custom Dashboard)
+
 
 ## Preview
 Widgets rendered in a dedicated dashboard (or any other page you create)
-![Demo](https://github.com/agencetwogether/matomo-analytics/blob/main/previews/preview-light.png?raw=true "Filament Matomo Preview")
-![Demo](https://github.com/agencetwogether/matomo-analytics/blob/main/previews/preview-dark.png?raw=true "Filament Matomo Preview")
+![Preview Light](https://github.com/agencetwogether/matomo-analytics/blob/main/previews/preview-light.png?raw=true "Filament Matomo Preview")
+![Preview Dark](https://github.com/agencetwogether/matomo-analytics/blob/main/previews/preview-dark.png?raw=true "Filament Matomo Preview")
 
 ## Changelog
 

@@ -8,9 +8,9 @@ class MatomoWidgetDataService
 {
     public function __construct(private readonly MatomoService $matomo) {}
 
-    public function get(string $method, string $filter, bool $hasPeriod = true): array
+    public function get(string $method, string $filter, bool $hasPreviousPeriod = true): array
     {
-        $params = MatomoDateResolver::resolve($filter, $hasPeriod);
+        $params = MatomoDateResolver::resolve($filter, $hasPreviousPeriod);
 
         return $this->matomo->query($method, $params, $filter);
     }
