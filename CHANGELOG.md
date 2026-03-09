@@ -2,6 +2,16 @@
 
 All notable changes to `matomo-analytics` will be documented in this file.
 
+## 1.1.0 - 2026-03-09
+
+- Remove bernskioldmedia/laravel-matomo dependency
+- Cleaning files
+- Feature: implementation Cache System
+- Feature command to create custom dashboard page
+- Secure Metamo Api calls
+
+**Full Changelog**: https://github.com/agencetwogether/matomo-analytics/compare/1.0.3...1.1.0
+
 ## 1.0.3 - 2026-03-06
 
 Optimization to reduce queries for VisitsByCountryWidget // VisitsByDeviceWidget // VisitsPerHourWidget widgets
