@@ -21,9 +21,6 @@
     <a href="https://matomo.org">
         <img alt="Matomo website" src="https://img.shields.io/badge/Matomo-Analytics-blue?style=for-the-badge&logo=matomo" >
     </a>
-    <a href="https://packagist.org/packages/agencetwogether/matomo-analytics">
-        <img alt="License website" src="https://img.shields.io/packagist/dt/agencetwogether/matomo-analytics.svg?style=for-the-badge" >
-    </a>
 <p>
 
 # Matomo Analytics for Filament
