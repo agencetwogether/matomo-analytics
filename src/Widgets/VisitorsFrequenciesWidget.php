@@ -13,7 +13,7 @@ class VisitorsFrequenciesWidget extends StatsOverviewWidget
 {
     use CanViewWidget;
 
-    public ?string $filter = 'T';
+    public ?string $filter = 'today';
 
     protected ?string $pollingInterval = null;
 

@@ -2,35 +2,55 @@
 
 namespace Agencetwogether\MatomoAnalytics\Widgets;
 
+use Agencetwogether\MatomoAnalytics\Services\MatomoWidgetDataService;
 use Agencetwogether\MatomoAnalytics\Support\MAFilters;
-use Agencetwogether\MatomoAnalytics\Support\MAResponse;
 use Agencetwogether\MatomoAnalytics\Support\SelectAction;
 use Agencetwogether\MatomoAnalytics\Traits\CanViewWidget;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class VisitsByCityWidget extends TableWidget
 {
     use CanViewWidget;
 
-    public ?string $filter = 'T';
+    public ?string $filter = 'today';
 
     protected static ?int $sort = 2;
+
+    protected function getData(): Collection
+    {
+        $data = collect(app(MatomoWidgetDataService::class)
+            ->get('UserCountry.getCity', $this->filter, false));
+
+        return $this->transformData($data, $this->filter);
+    }
+
+    protected function transformData(Collection $data, string $filter): Collection
+    {
+        return $data->map(fn ($pageRow): array => [
+            'city' => $pageRow['city_name'],
+            'region' => $pageRow['region_name'],
+            'country' => $pageRow['country_name'],
+            'image' => $pageRow['logo'],
+            'nb_visits' => (int) $pageRow['nb_visits'],
+        ])
+            ->mapWithKeys(fn (array $item): array => [str()->uuid()->toString() => $item])
+            ->sortByDesc('nb_visits');
+    }
 
     public function table(Table $table): Table
     {
         return $table
             ->heading(__('matomo-analytics::widgets.visits_by_city'))
             ->records(function (int $page, int $recordsPerPage): LengthAwarePaginator {
-                $records = collect(MAResponse::visitsByCity($this->filter))
-                    ->mapWithKeys(fn (array $item): array => [str()->uuid()->toString() => $item])
-                    ->sortByDesc('nb_visits');
-
+                $records = $this->getData();
                 $total = $records->count();
                 $records = $records->forPage($page, $recordsPerPage);
 
@@ -69,8 +89,10 @@ class VisitsByCityWidget extends TableWidget
             ])
             ->headerActions([
                 SelectAction::make('filter')
-                    ->options(fn (): array => MAFilters::common()),
+                    ->options(fn (): array => MAFilters::mostVisitedAndTopReferrers()),
             ])
+            ->emptyStateHeading(__('matomo-analytics::widgets.no_data'))
+            ->emptyStateIcon(Heroicon::CircleStack)
             ->deferLoading();
     }
 }

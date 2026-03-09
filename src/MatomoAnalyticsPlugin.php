@@ -27,6 +27,7 @@ class MatomoAnalyticsPlugin implements Plugin
                 MatomoAnalyticsDashboard::class,
             ])
             ->widgets([
+                Widgets\MatomoApiStatusWidget::class,
                 Widgets\MostVisitedPagesWidget::class,
                 Widgets\PageViewsWidget::class,
                 Widgets\TopReferrersListWidget::class,

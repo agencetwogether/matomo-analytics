@@ -2,14 +2,12 @@
 
 namespace Agencetwogether\MatomoAnalytics\Pages;
 
+use Agencetwogether\MatomoAnalytics\Contracts\HasMatomoWidgets;
 use Agencetwogether\MatomoAnalytics\Widgets;
-use Filament\Pages\Page;
 use Illuminate\Contracts\Support\Htmlable;
 
-class MatomoAnalyticsDashboard extends Page
+class MatomoAnalyticsDashboard extends MatomoBaseAnalyticsDashboard implements HasMatomoWidgets
 {
-    protected string $view = 'matomo-analytics::pages.matomo-analytics-dashboard';
-
     public static function getNavigationIcon(): ?string
     {
         return (string) config('matomo-analytics.dashboard_icon', 'heroicon-m-chart-bar');
@@ -25,20 +23,20 @@ class MatomoAnalyticsDashboard extends Page
         return (string) __('matomo-analytics::widgets.title');
     }
 
-    public static function canView(): bool
+    public static function canAccess(): bool
     {
         return config('matomo-analytics.dedicated_dashboard');
     }
 
     public static function shouldRegisterNavigation(): bool
     {
-        return static::canView() && static::$shouldRegisterNavigation;
+        return static::canAccess() && static::$shouldRegisterNavigation;
     }
 
     /**
      * @return array<class-string<\Filament\Widgets\Widget>>
      */
-    protected function getHeaderWidgets(): array
+    public function getMatomoWidgets(): array
     {
         return [
             Widgets\PageViewsWidget::class,

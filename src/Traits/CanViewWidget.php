@@ -2,43 +2,55 @@
 
 namespace Agencetwogether\MatomoAnalytics\Traits;
 
+use Agencetwogether\MatomoAnalytics\Pages\MatomoAnalyticsDashboard;
+use Filament\Pages\Dashboard;
+use Filament\Pages\Page;
 use Illuminate\Support\Str;
 
 trait CanViewWidget
 {
     public static function canView(): bool
     {
-        $panel = filament()->getCurrentOrDefaultPanel();
-        $panelPrefix = 'filament.' . $panel?->getId() . '.pages.';
+        $livewire = app('livewire')->current();
 
-        $configKey = Str::of(static::class)->after('Widgets\\')->before('Widget')->snake()->toString();
-        if (blank($configKey)) {
-            return false; // unknown widget, hide by default
+        if (! $livewire) {
+            return false;
         }
 
-        $widgetConfig = config('matomo-analytics.' . $configKey, [
+        $config = static::getWidgetConfig();
+
+        // Dashboard Filament
+        if ($livewire instanceof Dashboard) {
+            return $config['filament_dashboard'];
+        }
+
+        // Dashboard plugin
+        if ($livewire instanceof MatomoAnalyticsDashboard) {
+            return $config['plugin_dashboard'];
+        }
+
+        // Custom Pages
+        if ($livewire instanceof Page) {
+            return $config['custom_pages'];
+        }
+
+        return false;
+    }
+
+    protected static function getWidgetConfig(): array
+    {
+        static $cache = [];
+
+        $key = Str::of(static::class)
+            ->after('Widgets\\')
+            ->before('Widget')
+            ->snake()
+            ->toString();
+
+        return $cache[$key] ??= config("matomo-analytics.widgets.$key", [
             'filament_dashboard' => false,
-            'global' => false,
-        ]);
-
-        $filamentDashboardStatus = $widgetConfig['filament_dashboard'] ?? false;
-        $globalStatus = $widgetConfig['global'] ?? false;
-        $dedicatedDashboardEnabled = config('matomo-analytics.dedicated_dashboard', false);
-
-        // Show on default Filament dashboard
-        if ($filamentDashboardStatus && request()->routeIs($panelPrefix . 'dashboard')) {
-            return true;
-        }
-
-        // Show on dedicated MA dashboard
-        if ($globalStatus && $dedicatedDashboardEnabled && request()->routeIs($panelPrefix . 'matomo-analytics-dashboard')) {
-            return true;
-        }
-
-        // Show globally on any other panel pages
-        return $globalStatus && ! request()->routeIs([
-            $panelPrefix . 'dashboard',
-            $panelPrefix . 'matomo-analytics-dashboard',
+            'plugin_dashboard' => true,
+            'custom_pages' => false,
         ]);
     }
 }

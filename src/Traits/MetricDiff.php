@@ -8,7 +8,7 @@ use Carbon\CarbonPeriod;
 trait MetricDiff
 {
     /** @return array{current: CarbonPeriod, previous: CarbonPeriod} */
-    private function getLastWeek(): array
+    private static function getLastWeek(): array
     {
         $current = CarbonPeriod::create(
             Carbon::today()
@@ -39,7 +39,7 @@ trait MetricDiff
     }
 
     /** @return array{current: CarbonPeriod, previous: CarbonPeriod} */
-    private function getLastMonth(): array
+    private static function getLastMonth(): array
     {
         $current = CarbonPeriod::create(
             Carbon::today()
@@ -72,7 +72,7 @@ trait MetricDiff
     }
 
     /** @return array{current: CarbonPeriod, previous: CarbonPeriod} */
-    private function getLastSevenDays(): array
+    private static function getLastSevenDays(): array
     {
         $current = CarbonPeriod::create(
             Carbon::yesterday()
@@ -97,7 +97,7 @@ trait MetricDiff
     }
 
     /** @return array{current: CarbonPeriod, previous: CarbonPeriod} */
-    private function getLastThirtyDays(): array
+    private static function getLastThirtyDays(): array
     {
         $current = CarbonPeriod::create(
             Carbon::yesterday()

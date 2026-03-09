@@ -2,6 +2,7 @@
 
 namespace Agencetwogether\MatomoAnalytics;
 
+use Agencetwogether\MatomoAnalytics\Commands\MakeCustomMatomoDashboardPage;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -11,6 +12,7 @@ class MatomoAnalyticsServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('matomo-analytics')
+            ->hasCommand(MakeCustomMatomoDashboardPage::class)
             ->hasConfigFile()
             ->hasViews()
             ->hasTranslations();

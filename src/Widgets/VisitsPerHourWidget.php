@@ -2,8 +2,8 @@
 
 namespace Agencetwogether\MatomoAnalytics\Widgets;
 
+use Agencetwogether\MatomoAnalytics\Services\MatomoWidgetDataService;
 use Agencetwogether\MatomoAnalytics\Support\MAFilters;
-use Agencetwogether\MatomoAnalytics\Support\MAResponse;
 use Agencetwogether\MatomoAnalytics\Traits\CanViewWidget;
 use Filament\Support\RawJs;
 use Filament\Widgets\ChartWidget;
@@ -16,31 +16,63 @@ class VisitsPerHourWidget extends ChartWidget
 
     protected ?string $pollingInterval = null;
 
-    // @phpstan-ignore-next-line
     protected string $view = 'matomo-analytics::widgets.matomo-chart';
 
-    public ?string $filter = 'T';
+    public ?string $filter = 'today';
 
     protected static ?int $sort = 3;
 
     protected function getData(): array
     {
-        /** @var Collection<string, int|float> $response */
-        $response = collect(MAResponse::visitsPerHour($this->filter));
+        $data = collect(app(MatomoWidgetDataService::class)
+            ->get('VisitTime.getVisitInformationPerLocalTime', $this->filter, false));
 
-        $labels = $response->keys()->values()->all();
+        $dataMapped = $this->transformData($data, $this->filter);
+
+        $labels = $dataMapped->keys();
+        $dataChart = $dataMapped->values();
 
         return [
             'labels' => $labels,
             'datasets' => [
                 [
                     'label' => __('matomo-analytics::widgets.nb_uniq_visitors'),
-                    'data' => $response->values()->all(),
+                    'data' => $dataChart,
                     'borderWidth' => 1,
                     'barPercentage' => 1,
                 ],
             ],
         ];
+    }
+
+    protected function transformData(Collection $data, string $filter): Collection
+    {
+        $metric = match ($filter) {
+            'last_week', 'last_month' => 'sum_daily_nb_uniq_visitors',
+            default => 'nb_uniq_visitors',
+        };
+
+        if ($filter == 'last_7_days' || $filter == 'last_30_days') {
+            return collect($data->reduce(function ($carry, $items) use ($metric) {
+                foreach ($items as $item) {
+                    $carry[$item['label']] = ($carry[$item['label']] ?? 0) + $item[$metric];
+                }
+
+                return $carry;
+            }, []))
+                ->mapWithKeys(function (int $value, string $key) {
+                    return ["{$this->cleanLabel($key)}" => $value];
+                });
+        }
+
+        return $data->mapWithKeys(function (array $value, int $key) use ($metric) {
+            return [$this->cleanLabel($value['label']) => $value[$metric]];
+        });
+    }
+
+    protected function cleanLabel(string $label)
+    {
+        return rtrim($label, ' h') . ' h';
     }
 
     protected function getFilters(): ?array
