@@ -270,8 +270,8 @@ However, the cache still allows the data from the last successful synchronizatio
 
 ## Preview
 Widgets rendered in a dedicated dashboard (or any other page you create)
-![Preview Light](https://github.com/agencetwogether/matomo-analytics/blob/main/previews/preview-light.png?raw=true "Filament Matomo Preview")
-![Preview Dark](https://github.com/agencetwogether/matomo-analytics/blob/main/previews/preview-dark.png?raw=true "Filament Matomo Preview")
+<img src="previews/preview-light.png" alt="Light mode Preview" width="100%" />
+<img src="previews/preview-dark.png" alt="Dark mode Preview" width="100%" />
 
 ## Changelog
 
