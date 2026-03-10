@@ -1,6 +1,7 @@
 <a href="https://github.com/agencetwogether/matomo-analytics" class="filament-hidden">
-<img style="width: 100%; max-width: 100%;" alt="matomo-analytics-art" src="https://github.com/user-attachments/assets/d028456d-ddcc-4174-926f-587c33f0595f">
+<img style="width: 100%; max-width: 100%;" alt="matomo-analytics-art" src="https://github.com/user-attachments/assets/410c1b69-6441-4d9f-8c78-049c10cc2a9b">
 </a>
+
 <p align="center" class="flex items-center justify-center">
     <a href="https://filamentphp.com/docs/4.x/introduction/installation">
         <img alt="FILAMENT 4.x" src="https://img.shields.io/badge/FILAMENT-4.x-EBB304?style=for-the-badge">
