@@ -33,7 +33,7 @@ class VisitsByModelListWidget extends TableWidget
 
     protected function transformData(Collection $data, string $filter): Collection
     {
-        return $data->map(fn ($pageRow): array => [
+        return $data->filter(fn ($pageRow): bool => is_array($pageRow))->map(fn ($pageRow): array => [
             'name' => $pageRow['label'],
             'nb_visits' => (int) $pageRow['nb_visits'],
         ])

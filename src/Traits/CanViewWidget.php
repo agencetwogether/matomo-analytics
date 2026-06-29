@@ -11,6 +11,10 @@ trait CanViewWidget
 {
     public static function canView(): bool
     {
+        if (static::isLivewireUpdateRequest()) {
+            return true;
+        }
+
         $livewire = app('livewire')->current();
 
         if (! $livewire) {
@@ -19,22 +23,24 @@ trait CanViewWidget
 
         $config = static::getWidgetConfig();
 
-        // Dashboard Filament
         if ($livewire instanceof Dashboard) {
             return $config['filament_dashboard'];
         }
 
-        // Dashboard plugin
         if ($livewire instanceof MatomoAnalyticsDashboard) {
             return $config['plugin_dashboard'];
         }
 
-        // Custom Pages
         if ($livewire instanceof Page) {
             return $config['custom_pages'];
         }
 
         return false;
+    }
+
+    protected static function isLivewireUpdateRequest(): bool
+    {
+        return request()->is('livewire/update', 'livewire-*/update');
     }
 
     protected static function getWidgetConfig(): array

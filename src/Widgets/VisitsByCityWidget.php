@@ -34,7 +34,7 @@ class VisitsByCityWidget extends TableWidget
 
     protected function transformData(Collection $data, string $filter): Collection
     {
-        return $data->map(fn ($pageRow): array => [
+        return $data->filter(fn ($pageRow): bool => is_array($pageRow))->map(fn ($pageRow): array => [
             'city' => $pageRow['city_name'],
             'region' => $pageRow['region_name'],
             'country' => $pageRow['country_name'],
